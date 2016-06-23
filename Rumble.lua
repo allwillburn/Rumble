@@ -83,7 +83,7 @@ OnTick(function (myHero)
 				CastSkillShot(_Q, target)
                         end
             if RumbleMenu.Harass.E:Value() and Ready(_E) and ValidTarget(target, 850) then
-				CastSkillShot(_E, target.pos)
+				CastSkillShot(_E, target)
                         end
                end
 	--COMBO
@@ -96,7 +96,7 @@ OnTick(function (myHero)
 				CastSpell(_W)
 	                end
 	    if RumbleMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 850) then
-				CastSkillShot(_E, target.pos)
+				CastSkillShot(_E, target)
 			end
 	    
             if RumbleMenu.Combo.R:Value() and Ready(_R) and EnemiesAround(myHero, 1700) >= RumbleMenu.Combo.RSS:Value() then
@@ -135,12 +135,12 @@ OnTick(function (myHero)
                 end 
 
                 if IsReady(_E) and ValidTarget(enemy, 850) and RumbleMenu.KillSteal.E:Value() and GetHP(enemy) < getdmg("E",enemy) then
-		         CastSkillShot(_E, target.pos)
+		         CastSkillShot(_E, enemy)
   
                 end
     
                 if IsReady(_R) and ValidTarget(enemy, 1700) and RumbleMenu.KillSteal.R:Value() and GetHP(enemy) < getdmg("R",enemy) then
-		         CastSkillShot(_R, enemy)
+		         CastSkillShot(_R, target.pos)
                 end
       end
 
