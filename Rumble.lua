@@ -8,6 +8,7 @@ end
 
 if GetObjectName(GetMyHero()) ~= "Rumble" then return end
 
+require("OpenPredict")
 require("DamageLib")
 
 function AutoUpdate(data)
@@ -22,6 +23,9 @@ end
 
 GetLevelPoints = function(unit) return GetLevel(unit) - (GetCastLevel(unit,0)+GetCastLevel(unit,1)+GetCastLevel(unit,2)+GetCastLevel(unit,3)) end
 local SetDCP, SkinChanger = 0
+
+local RumbleE = {delay = .5, range = 850, width = 90, speed = 2000}
+local RumbleR = {delay = .5, range = 1700, width = 0, speed = 1400}
 
 local RumbleMenu = Menu("Rumble", "Rumble")
 
@@ -95,14 +99,20 @@ OnTick(function (myHero)
 	    if RumbleMenu.Combo.W:Value() and Ready(_W) then
 				CastSpell(_W)
 	                end
-	    if RumbleMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 850) then
-				CastSkillShot(_E, target)
-			end
-	    
-            if RumbleMenu.Combo.R:Value() and Ready(_R) and EnemiesAround(myHero, 1700) >= RumbleMenu.Combo.RSS:Value() then
-                                CastSkillShot(_R, target.pos)		  	
-                        end
 
+	    if RumbleMenu.Combo.E:Value() and Ready(_E) and ValidTarget(target, 850) then
+                local EPred = GetPrediction(target,RumbleE)
+                       if EPred.hitChance > 0.4 and not EPred:mCollision(1) then
+                                 CastSkillShot(_E,EPred.castPos)
+                       end
+                 end
+
+            if RumbleMenu.Combo.R:Value() and Ready(_R) and ValidTarget(target, 1700) then
+                local RPred = GetPrediction(target,RumbleR)
+                       if RPred.hitChance > 0.4 and not RPred:mCollision(1) then
+                                 CastSkillShot(_R,RPred.castPos)
+                       end
+                end
             end
 
          --AUTO IGNITE
