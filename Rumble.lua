@@ -25,7 +25,7 @@ GetLevelPoints = function(unit) return GetLevel(unit) - (GetCastLevel(unit,0)+Ge
 local SetDCP, SkinChanger = 0
 
 local RumbleE = {delay = .5, range = 850, width = 90, speed = 2000}
-local RumbleR = {delay = .5, range = 1700, width = 0, speed = 1400}
+local RumbleR = {delay = .5, range = 1700, width = 200, speed = 1600}
 
 local RumbleMenu = Menu("Rumble", "Rumble")
 
