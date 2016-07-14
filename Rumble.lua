@@ -39,9 +39,9 @@ RumbleMenu.Combo:Boolean("W", "Use W in combo", true)
 RumbleMenu.Combo:Boolean("E", "Use E in combo", true)
 RumbleMenu.Combo:Slider("Epred", "E Hit Chance", 3,0,10,1)
 RumbleMenu.Combo:Boolean("R", "Use R in combo", true)
+RumbleMenu.Combo:Slider("RX", "X Enemies to Cast R",3,1,5,1)
 RumbleMenu.Combo:Slider("Rpred", "R Hit Chance", 3,0,10,1)
-RumbleMenu.Combo:Boolean("RS", "Use R if can hit: X", true)
-RumbleMenu.Combo:Slider("RSS","Enemy count: ", 3, 1, 5, 2)
+
 
 RumbleMenu:SubMenu("AutoMode", "AutoMode")
 RumbleMenu.AutoMode:Boolean("Level", "Auto level spells", true)
@@ -113,7 +113,7 @@ OnTick(function (myHero)
                        end
                  end
 
-            if RumbleMenu.Combo.R:Value() and Ready(_R) and ValidTarget(target, 1700) then
+            if RumbleMenu.Combo.R:Value() and Ready(_R) and EnemiesAround(myHeroPos(), 1700) >= 1 and (EnemiesAround(myHeroPos(), 1700) >= RumbleMenu.Combo.RX:Value()) then
                 local RPred = GetPrediction(target,RumbleR)
                        if RPred.hitChance > (RumbleMenu.Combo.Rpred:Value() * 0.1) and not RPred:mCollision(1) then
                                  CastSkillShot(_R,RPred.castPos)
